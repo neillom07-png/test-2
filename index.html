@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CQwebsPlus — Professional websites and AI receptionists for Queensland businesses. Never miss a call again.">
+<title>CQwebsPlus — Websites & AI Receptionists for Queensland Businesses</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0b0f0a;--surface:#111510;--surface2:#181d16;--border:rgba(255,255,255,0.07);--gold:#c9a84c;--gold2:#e8c878;--green:#3ecf8e;--text:#e8ebe6;--muted:#7a8a76}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:400;line-height:1.6;overflow-x:hidden}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(11,15,10,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:-0.5px;cursor:pointer}
+.logo span{color:var(--text)}
+.nav-links{display:flex;gap:28px;align-items:center;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;cursor:pointer;transition:color 0.2s;position:relative}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--gold);border-radius:2px}
+.nav-cta{background:var(--gold)!important;color:#0b0f0a!important;padding:10px 20px!important;border-radius:6px!important;font-weight:600!important}
+.nav-cta:hover{background:var(--gold2)!important}
+.nav-cta.active::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+
+/* Pages */
+.page{display:none!important;min-height:100vh}
+.page.active{display:block!important}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:140px 40px 80px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 30%,rgba(201,168,76,0.08) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(45,90,39,0.10) 0%,transparent 60%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:820px}
+
+/* Badge */
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);border-radius:100px;padding:6px 18px;font-size:12.5px;color:var(--gold);font-weight:500;letter-spacing:0.4px;margin-bottom:28px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+h1{font-family:'Playfair Display',serif;font-size:clamp(40px,6.5vw,82px);font-weight:900;line-height:1.06;letter-spacing:-2px;margin-bottom:24px}
+h1 em{font-style:italic;color:var(--gold)}
+.hero-sub{font-size:clamp(16px,2vw,19px);color:var(--muted);max-width:580px;margin:0 auto 40px;font-weight:300;line-height:1.7}
+
+/* Buttons */
+.btn-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--gold);color:#0b0f0a;padding:15px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;font-family:'Outfit',sans-serif}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,0.3)}
+.btn-secondary{background:transparent;color:var(--text);padding:15px 28px;border-radius:8px;font-size:15px;font-weight:500;text-decoration:none;border:1px solid var(--border);transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:'Outfit',sans-serif}
+.btn-secondary:hover{border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.04)}
+.btn-call{background:var(--green);color:#0a1a0f;padding:15px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;font-family:'Outfit',sans-serif}
+.btn-call:hover{background:#2ab870;transform:translateY(-2px);box-shadow:0 8px 28px rgba(62,207,142,0.3)}
+
+/* Stats */
+.stats{display:flex;gap:48px;flex-wrap:wrap;padding-top:48px;margin-top:48px;border-top:1px solid var(--border);justify-content:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:4px}
+.stat-label{font-size:13px;color:var(--muted)}
+
+/* Section */
+.section{padding:100px 48px}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,52px);font-weight:700;line-height:1.15;letter-spacing:-1px;margin-bottom:16px}
+h2 em{font-style:italic;color:var(--gold)}
+.section-sub{font-size:17px;color:var(--muted);font-weight:300;max-width:520px;line-height:1.7;margin-bottom:56px}
+
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;transition:border-color 0.2s,transform 0.2s}
+.card:hover{border-color:rgba(201,168,76,0.2);transform:translateY(-3px)}
+.card-icon{font-size:28px;margin-bottom:16px}
+.card h3{font-size:18px;font-weight:600;margin-bottom:10px}
+.card p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* Dark band */
+.dark-band{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 48px}
+
+/* CTA strip */
+.cta-strip{background:linear-gradient(135deg,#111510,#1a2016);border:1px solid rgba(201,168,76,0.15);border-radius:20px;padding:56px 48px;text-align:center;margin:60px 0 0}
+.cta-strip h2{margin-bottom:12px}
+.cta-strip p{color:var(--muted);margin-bottom:32px;font-size:16px}
+
+/* Page hero */
+.page-hero{padding:160px 48px 80px;text-align:center;position:relative;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 50% 40%,rgba(201,168,76,0.07) 0%,transparent 70%);pointer-events:none}
+.page-hero-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+
+/* FAQ */
+.faq-item{border-bottom:1px solid var(--border);padding:24px 0}
+.faq-q{display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:16px;font-weight:500;gap:16px}
+.faq-q:hover{color:var(--gold)}
+.faq-icon{color:var(--gold);font-size:20px;flex-shrink:0;transition:transform 0.3s}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.7;max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
+.faq-item.open .faq-a{max-height:300px;padding-top:14px}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+.form-group.full{grid-column:1/-1}
+.form-group label{display:block;font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 16px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(201,168,76,0.4)}
+.form-group textarea{resize:vertical;min-height:120px}
+.form-group select option{background:var(--surface2)}
+.form-submit{background:var(--gold);color:#0b0f0a;border:none;padding:16px 32px;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.2s;width:100%;margin-top:8px}
+.form-submit:hover{background:var(--gold2);transform:translateY(-1px)}
+
+/* Footer */
+.site-footer{border-top:1px solid var(--border);padding:48px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;max-width:1100px;margin:0 auto}
+.footer-brand p{font-size:13px;color:var(--muted);line-height:1.6;margin-top:10px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.footer-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:8px;transition:color 0.2s;cursor:pointer}
+.footer-col a:hover{color:var(--text)}
+.footer-bottom{border-top:1px solid var(--border);padding:20px 48px;text-align:center;font-size:12px;color:var(--muted)}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:12px}
+.checklist-item{display:flex;align-items:center;gap:12px;font-size:14px}
+.checklist-item span:first-child{color:var(--green);font-weight:700;flex-shrink:0}
+
+/* Responsive */
+@media(max-width:768px){
+  nav{padding:16px 24px}
+  .nav-links{display:none;flex-direction:column;position:fixed;top:61px;left:0;right:0;background:rgba(11,15,10,0.97);padding:24px;gap:20px;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .hero,.page-hero{padding:120px 24px 60px}
+  .section{padding:60px 24px}
+  .dark-band{padding:60px 24px}
+  .cta-strip{padding:40px 24px}
+  .form-grid{grid-template-columns:1fr}
+  .site-footer{grid-template-columns:1fr;padding:40px 24px}
+  .footer-bottom{padding:16px 24px}
+  .stats{gap:28px}
+  .about-grid,.service-grid,.contact-grid,.premium-inner{grid-template-columns:1fr!important}
+  .service-grid > div{order:unset!important}
+  h1{letter-spacing:-1px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div>
+  <ul class="nav-links" id="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ HOME PAGE -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge"><div class="badge-dot"></div>Central Queensland's AI Business Partner</div>
+      <h1>Your business.<br><em>Always answering.</em></h1>
+      <p class="hero-sub">We build professional websites and set up AI receptionists that answer every call 24/7 — so Queensland businesses never miss a client again.</p>
+      <div class="btn-group">
+        <button class="btn-primary" onclick="showPage('contact')">📋 Get a free quote</button>
+        <a href="tel:0449798359" class="btn-call">📞 Call Neil now</a>
+        <button class="btn-secondary" onclick="showPage('services')">See what we do →</button>
+      </div>
+      <div class="stats">
+        <div><div class="stat-num">24/7</div><div class="stat-label">Calls answered</div></div>
+        <div><div class="stat-num">48h</div><div class="stat-label">Setup time</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-label">Queensland based</div></div>
+        <div><div class="stat-num">$0</div><div class="stat-label">Missed calls</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dark-band">
+    <div class="section-inner">
+      <div class="section-tag">The problem</div>
+      <h2>Every missed call is a <em>missed job</em></h2>
+      <p class="section-sub">Most Queensland small businesses lose work every week — not because they're not good at what they do, but because customers couldn't reach them or couldn't find them online.</p>
+      <div class="cards">
+        <div class="card"><div class="card-icon">📵</div><h3>Missed calls while on the tools</h3><p>You're on a job, can't answer. The customer calls your competitor instead. That job is gone.</p></div>
+        <div class="card"><div class="card-icon">🔍</div><h3>Invisible on Google</h3><p>Without a website, you don't exist to anyone searching online. That's hundreds of potential customers who never find you.</p></div>
+        <div class="card"><div class="card-icon">🌙</div><h3>After-hours enquiries lost</h3><p>Customers search and call at all hours. If nobody answers, they move on. Your AI receptionist never sleeps.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-tag">The solution</div>
+      <h2>One bundle. <em>Everything sorted.</em></h2>
+      <p class="section-sub">We handle your entire online presence — professional website, AI receptionist, and ongoing support — so you can focus on the work.</p>
+      <div class="cards">
+        <div class="card"><div class="card-icon">🌐</div><h3>Professional Website</h3><p>A custom-built website that looks great, loads fast, and shows up on Google. Built specifically for your business and your customers.</p></div>
+        <div class="card"><div class="card-icon">🎙️</div><h3>AI Receptionist</h3><p>A human-sounding AI that answers your calls around the clock. It greets callers, answers questions, and books appointments.</p></div>
+        <div class="card"><div class="card-icon">🔒</div><h3>Built-in Security</h3><p>Every site we build is protected by Cloudflare — the same security used by major corporations. DDoS protection and firewall included.</p></div>
+        <div class="card"><div class="card-icon">🛠️</div><h3>Ongoing Support</h3><p>We maintain everything monthly. Need to update your hours or services? Just call us. We're local and always available.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dark-band">
+    <div class="section-inner">
+      <div class="section-tag">How it works</div>
+      <h2>Up and running in <em>48 hours</em></h2>
+      <p class="section-sub">We make it simple. You answer our questions, we do everything else.</p>
+      <div class="cards">
+        <div class="card" style="border-color:rgba(201,168,76,0.15)"><div style="font-family:'Playfair Display',serif;font-size:48px;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:12px">01</div><h3>Tell us about your business</h3><p>Fill in our simple questionnaire — your hours, services, and how you want calls handled.</p></div>
+        <div class="card" style="border-color:rgba(201,168,76,0.15)"><div style="font-family:'Playfair Display',serif;font-size:48px;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:12px">02</div><h3>We build everything</h3><p>Your website and AI receptionist are built and tested. You don't lift a finger.</p></div>
+        <div class="card" style="border-color:rgba(201,168,76,0.15)"><div style="font-family:'Playfair Display',serif;font-size:48px;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:12px">03</div><h3>We go live together</h3><p>We walk you through everything, connect your number, and you're live within 48 hours.</p></div>
+        <div class="card" style="border-color:rgba(201,168,76,0.15)"><div style="font-family:'Playfair Display',serif;font-size:48px;color:rgba(201,168,76,0.2);line-height:1;margin-bottom:12px">04</div><h3>Never miss a call again</h3><p>Aria answers every call. You focus on the work. We handle the rest each month.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="cta-strip">
+        <div class="section-tag" style="display:flex;justify-content:center">Ready to get started?</div>
+        <h2>Let's build your business <em>online presence</em></h2>
+        <p>Free quote, no obligation, local Central Queensland team.</p>
+        <div class="btn-group" style="justify-content:center">
+          <button class="btn-primary" onclick="showPage('contact')">📋 Get your free quote</button>
+          <a href="tel:0449798359" class="btn-call">📞 0449 798 359</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div><p>Websites and AI receptionists for Queensland businesses. Local, reliable, and always here when you need us.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a><a onclick="showPage('services')">Services</a><a onclick="showPage('faq')">FAQ</a><a onclick="showPage('contact')">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:0449798359">📞 0449 798 359</a><a href="/cdn-cgi/l/email-protection#553b303c39393a386562153c36393a20317b363a38">✉️ <span class="__cf_email__" data-cfemail="056b606c69696a683532456c66696a70612b666a68">[email&#160;protected]</span></a><a>📍 Central Queensland</a></div>
+  </footer>
+  <div class="footer-bottom"><p>© 2026 CQwebsPlus. All rights reserved. Protected by Cloudflare.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="badge"><div class="badge-dot"></div>Central Queensland</div>
+      <h1>Built for <em>Queensland businesses</em></h1>
+      <p class="hero-sub">We're a local Central Queensland business that helps other local businesses grow online and never miss a call.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="about-grid">
+        <div>
+          <div class="section-tag">Our story</div>
+          <h2>Local business. <em>Local knowledge.</em></h2>
+          <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:20px">CQwebsPlus was built with one simple idea — Queensland small businesses deserve the same professional online presence as the big guys, without the big city price tag.</p>
+          <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:20px">We saw too many great local businesses losing work because they had no website, or missing calls because they were out on the job. So we built a solution that fixes both problems at once.</p>
+          <p style="color:var(--muted);font-size:16px;line-height:1.8">We're based right here in Central Queensland — not some overseas call centre, not a Brisbane agency that doesn't understand regional business. When you call us, you're talking to someone who lives and works in the same region you do.</p>
+        </div>
+        <div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px">
+            <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--gold);margin-bottom:24px">What we believe</div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;gap:16px;align-items:flex-start"><div style="color:var(--gold);font-size:20px;margin-top:2px">✦</div><div><div style="font-weight:600;margin-bottom:4px">Every missed call is money left on the table</div><div style="font-size:14px;color:var(--muted)">We built our AI receptionist to solve this problem permanently.</div></div></div>
+              <div style="display:flex;gap:16px;align-items:flex-start"><div style="color:var(--gold);font-size:20px;margin-top:2px">✦</div><div><div style="font-weight:600;margin-bottom:4px">Local businesses deserve local support</div><div style="font-size:14px;color:var(--muted)">We're always available by phone and we know the Queensland market.</div></div></div>
+              <div style="display:flex;gap:16px;align-items:flex-start"><div style="color:var(--gold);font-size:20px;margin-top:2px">✦</div><div><div style="font-weight:600;margin-bottom:4px">Technology should be simple</div><div style="font-size:14px;color:var(--muted)">You shouldn't need to understand AI or web design — that's our job.</div></div></div>
+              <div style="display:flex;gap:16px;align-items:flex-start"><div style="color:var(--gold);font-size:20px;margin-top:2px">✦</div><div><div style="font-weight:600;margin-bottom:4px">Security is not optional</div><div style="font-size:14px;color:var(--muted)">Every site we build is protected by enterprise-grade Cloudflare security — included as standard.</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="dark-band">
+    <div class="section-inner">
+      <div class="section-tag" style="text-align:center">Why CQwebsPlus</div>
+      <h2 style="text-align:center">What makes us <em>different</em></h2>
+      <p class="section-sub" style="max-width:600px;margin-left:auto;margin-right:auto;text-align:center">There are plenty of web designers out there. Here's why Queensland businesses choose us.</p>
+      <div class="cards">
+        <div class="card"><div class="card-icon">📍</div><h3>We're local</h3><p>Based in Central Queensland. We know the region, understand regional business, and are always just a phone call away.</p></div>
+        <div class="card"><div class="card-icon">🤖</div><h3>AI receptionist included</h3><p>Most web designers just build a website. We build a website AND set up an AI receptionist that answers your calls 24/7.</p></div>
+        <div class="card"><div class="card-icon">⚡</div><h3>Live in 48 hours</h3><p>Not weeks. Not months. Your website and AI receptionist are live within 48 hours of getting started. We move fast.</p></div>
+        <div class="card"><div class="card-icon">🔒</div><h3>Enterprise security</h3><p>Cloudflare protection on every site. DDoS protection, firewall, SSL. The same security used by banks and major corporations.</p></div>
+        <div class="card"><div class="card-icon">💬</div><h3>Plain English</h3><p>No jargon, no confusing tech talk. We explain everything clearly and make sure you understand what you're getting.</p></div>
+        <div class="card"><div class="card-icon">🤝</div><h3>No lock-in contracts</h3><p>We earn your business every month. No lock-in contracts, no exit fees. Stay because we're worth it, not because you're stuck.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="cta-strip">
+        <h2>Ready to get started?</h2>
+        <p>Let's have a quick chat about what we can do for your business.</p>
+        <div class="btn-group" style="justify-content:center">
+          <button class="btn-primary" onclick="showPage('contact')">📋 Get a free quote</button>
+          <a href="tel:0449798359" class="btn-call">📞 0449 798 359</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div><p>Websites and AI receptionists for Queensland businesses.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a><a onclick="showPage('services')">Services</a><a onclick="showPage('faq')">FAQ</a><a onclick="showPage('contact')">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:0449798359">📞 0449 798 359</a><a href="/cdn-cgi/l/email-protection#a3cdc6cacfcfccce9394e3cac0cfccd6c78dc0ccce">✉️ <span class="__cf_email__" data-cfemail="5c323935303033316c6b1c353f30332938723f3331">[email&#160;protected]</span></a><a>📍 Central Queensland</a></div>
+  </footer>
+  <div class="footer-bottom"><p>© 2026 CQwebsPlus. All rights reserved. Protected by Cloudflare.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SERVICES PAGE -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="badge"><div class="badge-dot"></div>What we offer</div>
+      <h1>Everything your business <em>needs online</em></h1>
+      <p class="hero-sub">From a professional website to an AI receptionist that never sleeps — we have a solution for every Queensland business.</p>
+      <div class="btn-group" style="margin-top:32px">
+        <button class="btn-primary" onclick="showPage('contact')">Get a free quote</button>
+        <a href="tel:0449798359" class="btn-call">📞 Call to discuss</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="service-grid">
+        <div>
+          <div class="section-tag">Service 01</div>
+          <h2>Professional <em>Website</em></h2>
+          <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:24px">A custom-built website designed specifically for your business. Not a template — a real website built to represent your brand, show up on Google, and turn visitors into customers.</p>
+          <div class="checklist">
+            <div class="checklist-item"><span>✓</span> Custom design unique to your brand</div>
+            <div class="checklist-item"><span>✓</span> Mobile-friendly and fast loading</div>
+            <div class="checklist-item"><span>✓</span> Contact forms straight to your inbox</div>
+            <div class="checklist-item"><span>✓</span> Google-optimised so customers find you</div>
+            <div class="checklist-item"><span>✓</span> Cloudflare security and DDoS protection</div>
+            <div class="checklist-item"><span>✓</span> Free SSL certificate</div>
+            <div class="checklist-item"><span>✓</span> Monthly updates and maintenance</div>
+            <div class="checklist-item"><span>✓</span> Live within 48 hours</div>
+          </div>
+          <div style="margin-top:32px"><button class="btn-primary" onclick="showPage('contact')">Get a quote for your website</button></div>
+        </div>
+        <div>
+          <div style="background:var(--surface);border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:40px">
+            <div style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Essential Package</div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin-bottom:8px">Website Only</div>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:24px">Perfect if you just need a professional online presence to get started.</p>
+            <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:24px">
+              <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Includes</div>
+              <div style="font-size:14px;color:var(--muted);line-height:2">Up to 5 pages · Custom design · Contact form<br>Mobile-friendly · Google Analytics · Cloudflare security<br>SSL certificate · Monthly maintenance</div>
+            </div>
+            <button class="btn-primary" style="width:100%;justify-content:center" onclick="showPage('contact')">Get a quote →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:1px;background:var(--border);margin:0 48px"></div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center" class="service-grid">
+        <div style="order:2">
+          <div class="section-tag">Service 02</div>
+          <h2>AI <em>Receptionist</em></h2>
+          <p style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:24px">Meet Aria — your AI receptionist. She answers every call in a warm, natural-sounding Australian voice. She doesn't take days off, doesn't put people on hold, and never misses a call.</p>
+          <div class="checklist">
+            <div class="checklist-item"><span>✓</span> Answers calls 24 hours a day, 7 days a week</div>
+            <div class="checklist-item"><span>✓</span> Human-sounding Australian voice</div>
+            <div class="checklist-item"><span>✓</span> Books appointments automatically</div>
+            <div class="checklist-item"><span>✓</span> Answers your FAQs and business questions</div>
+            <div class="checklist-item"><span>✓</span> Takes messages and sends you summaries</div>
+            <div class="checklist-item"><span>✓</span> Routes calls to the right person</div>
+            <div class="checklist-item"><span>✓</span> Works with your existing phone number</div>
+            <div class="checklist-item"><span>✓</span> Call recordings and monthly reports</div>
+          </div>
+          <div style="margin-top:32px"><button class="btn-primary" onclick="showPage('contact')">Get a quote for AI receptionist</button></div>
+        </div>
+        <div style="order:1">
+          <div style="background:var(--surface);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:40px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c878)"></div>
+            <div style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px">🎙️ Concierge Package</div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin-bottom:8px">AI Receptionist</div>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:24px">For businesses that want to stop missing calls immediately.</p>
+            <div style="border-top:1px solid var(--border);padding-top:24px;margin-bottom:24px">
+              <div style="font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Includes</div>
+              <div style="font-size:14px;color:var(--muted);line-height:2">24/7 call answering · Human-sounding voice<br>Appointment booking · FAQ answering<br>Call recordings · Monthly call reports<br>Works with your existing number</div>
+            </div>
+            <button class="btn-primary" style="width:100%;justify-content:center" onclick="showPage('contact')">Get a quote →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="height:1px;background:var(--border);margin:0 48px"></div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div style="text-align:center;max-width:680px;margin:0 auto 56px">
+        <div class="section-tag" style="display:flex;justify-content:center">Service 03</div>
+        <h2>The <em>Premium Bundle</em></h2>
+        <p class="section-sub" style="margin:0 auto">Our most popular option. Get both a professional website and AI receptionist together — the complete solution for any Queensland business.</p>
+      </div>
+      <div style="background:linear-gradient(145deg,#151a13,#111510);border:1px solid rgba(201,168,76,0.3);border-radius:20px;padding:56px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#c9a84c,#e8c878,#c9a84c)"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center" class="premium-inner">
+          <div>
+            <div style="font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px">⭐ Premium Bundle</div>
+            <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;margin-bottom:12px">Website +<br>AI Receptionist</div>
+            <p style="color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:32px">Everything your business needs in one package. Professional website, AI receptionist, enterprise security, and ongoing support — all included.</p>
+            <button class="btn-primary" onclick="showPage('contact')">Get a quote for the full bundle →</button>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Everything included</div>
+            <div class="checklist">
+              <div class="checklist-item"><span>✓</span> Custom website up to 10 pages</div>
+              <div class="checklist-item"><span>✓</span> AI receptionist 24/7</div>
+              <div class="checklist-item"><span>✓</span> Human-sounding Australian voice</div>
+              <div class="checklist-item"><span>✓</span> Appointment booking</div>
+              <div class="checklist-item"><span>✓</span> Call recordings & monthly reports</div>
+              <div class="checklist-item"><span>✓</span> Cloudflare DDoS & firewall protection</div>
+              <div class="checklist-item"><span>✓</span> SSL certificate included</div>
+              <div class="checklist-item"><span>✓</span> Monthly website & AI updates</div>
+              <div class="checklist-item"><span>✓</span> Priority support — direct to Neil</div>
+              <div class="checklist-item"><span>✓</span> No lock-in contract</div>
+              <div class="checklist-item"><span>✓</span> Live within 48 hours</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div><p>Websites and AI receptionists for Queensland businesses.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a><a onclick="showPage('services')">Services</a><a onclick="showPage('faq')">FAQ</a><a onclick="showPage('contact')">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:0449798359">📞 0449 798 359</a><a href="/cdn-cgi/l/email-protection#9df3f8f4f1f1f2f0adaaddf4fef1f2e8f9b3fef2f0">✉️ <span class="__cf_email__" data-cfemail="19777c7075757674292e59707a75766c7d377a7674">[email&#160;protected]</span></a><a>📍 Central Queensland</a></div>
+  </footer>
+  <div class="footer-bottom"><p>© 2026 CQwebsPlus. All rights reserved. Protected by Cloudflare.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ FAQ PAGE -->
+<div class="page" id="page-faq">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="badge"><div class="badge-dot"></div>Got questions?</div>
+      <h1>Frequently asked <em>questions</em></h1>
+      <p class="hero-sub">Everything you need to know about our websites and AI receptionist. Can't find what you're looking for? Just call us.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner" style="max-width:800px">
+      <div class="section-tag">Website questions</div>
+      <h2 style="margin-bottom:32px">About our <em>websites</em></h2>
+      <div id="faq-website"></div>
+
+      <div class="section-tag" style="margin-top:64px">AI Receptionist questions</div>
+      <h2 style="margin-bottom:32px">About <em>Aria</em></h2>
+      <div id="faq-aria"></div>
+
+      <div class="section-tag" style="margin-top:64px">General questions</div>
+      <h2 style="margin-bottom:32px">Getting <em>started</em></h2>
+      <div id="faq-general"></div>
+
+      <div class="cta-strip" style="margin-top:64px">
+        <h2>Still have questions?</h2>
+        <p>Just pick up the phone — Neil will answer and give you a straight answer.</p>
+        <div class="btn-group" style="justify-content:center">
+          <a href="tel:0449798359" class="btn-call">📞 Call 0449 798 359</a>
+          <button class="btn-secondary" onclick="showPage('contact')">Send us a message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div><p>Websites and AI receptionists for Queensland businesses.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a><a onclick="showPage('services')">Services</a><a onclick="showPage('faq')">FAQ</a><a onclick="showPage('contact')">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:0449798359">📞 0449 798 359</a><a href="/cdn-cgi/l/email-protection#056b606c69696a683532456c66696a70612b666a68">✉️ <span class="__cf_email__" data-cfemail="dcb2b9b5b0b0b3b1eceb9cb5bfb0b3a9b8f2bfb3b1">[email&#160;protected]</span></a><a>📍 Central Queensland</a></div>
+  </footer>
+  <div class="footer-bottom"><p>© 2026 CQwebsPlus. All rights reserved. Protected by Cloudflare.</p></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="badge"><div class="badge-dot"></div>Free quote — no obligation</div>
+      <h1>Let's get your business <em>sorted</em></h1>
+      <p class="hero-sub">Fill in the form or call Neil directly. We'll have a quick chat and you'll know exactly what we can do for your business.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start" class="contact-grid">
+        <div>
+          <h2 style="margin-bottom:32px">Get in <em>touch</em></h2>
+          <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:40px">
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <div style="width:44px;height:44px;border-radius:10px;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📞</div>
+              <div><div style="font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Phone</div><a href="tel:0449798359" style="color:var(--text);text-decoration:none;font-size:20px;font-weight:600;font-family:'Playfair Display',serif">0449 798 359</a><div style="font-size:13px;color:var(--muted);margin-top:2px">Call or text anytime</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <div style="width:44px;height:44px;border-radius:10px;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">✉️</div>
+              <div><div style="font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Email</div><a href="/cdn-cgi/l/email-protection#204e45494c4c4f4d10176049434c4f55440e434f4d" style="color:var(--text);text-decoration:none;font-size:16px;font-weight:500"><span class="__cf_email__" data-cfemail="28464d4144444745181f68414b44475d4c064b4745">[email&#160;protected]</span></a><div style="font-size:13px;color:var(--muted);margin-top:2px">We reply within 24 hours</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <div style="width:44px;height:44px;border-radius:10px;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📍</div>
+              <div><div style="font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Location</div><div style="color:var(--text);font-size:16px;font-weight:500">Central Queensland</div><div style="font-size:13px;color:var(--muted);margin-top:2px">Serving all of Queensland</div></div>
+            </div>
+            <div style="display:flex;gap:16px;align-items:flex-start">
+              <div style="width:44px;height:44px;border-radius:10px;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🕐</div>
+              <div><div style="font-size:12px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Response time</div><div style="color:var(--text);font-size:16px;font-weight:500">Within 24 hours</div><div style="font-size:13px;color:var(--muted);margin-top:2px">Usually much faster</div></div>
+            </div>
+          </div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px">
+            <div style="font-size:14px;font-weight:600;color:var(--gold);margin-bottom:16px">What happens after you reach out?</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted)"><div style="background:rgba(201,168,76,0.15);color:var(--gold);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">1</div>Neil gets your enquiry and calls you within 24 hours</div>
+              <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted)"><div style="background:rgba(201,168,76,0.15);color:var(--gold);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">2</div>We have a quick 15-minute chat about your business</div>
+              <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted)"><div style="background:rgba(201,168,76,0.15);color:var(--gold);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">3</div>You get a clear quote — no jargon, no hidden fees</div>
+              <div style="display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted)"><div style="background:rgba(201,168,76,0.15);color:var(--gold);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">4</div>If you're happy, we get started — live within 48 hours</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:40px">
+            <div style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:6px">Get a free quote</div>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:28px">Tell us about your business and we'll get back to you within 24 hours.</p>
+            <form id="contact-form" onsubmit="handleSubmit(event)">
+              <div class="form-grid">
+                <div class="form-group"><label>Your name *</label><input type="text" name="name" placeholder="John Smith" required></div>
+                <div class="form-group"><label>Business name *</label><input type="text" name="business" placeholder="Smith Plumbing" required></div>
+                <div class="form-group"><label>Phone number *</label><input type="tel" name="phone" placeholder="04XX XXX XXX" required></div>
+                <div class="form-group"><label>Email address *</label><input type="email" name="email" placeholder="john@example.com" required></div>
+                <div class="form-group full"><label>Your industry</label><select name="industry"><option value="">Select your industry</option><option>Trades (plumbing, electrical, building)</option><option>Air conditioning & refrigeration</option><option>Landscaping & lawn care</option><option>Automotive & mechanical</option><option>Medical & health</option><option>Hair, beauty & wellness</option><option>Legal & accounting</option><option>Real estate</option><option>Retail & hospitality</option><option>Other</option></select></div>
+                <div class="form-group full"><label>What are you interested in?</label><select name="service"><option value="">Select a service</option><option>Website only</option><option>AI Receptionist only</option><option>Website + AI Receptionist (bundle)</option><option>Not sure — just want to chat</option></select></div>
+                <div class="form-group full"><label>Tell us about your business</label><textarea name="message" placeholder="What does your business do? What's your biggest challenge right now?"></textarea></div>
+              </div>
+              <button type="submit" class="form-submit" id="submit-btn">Send enquiry — we'll call you back →</button>
+            </form>
+            <div id="success-msg" style="display:none;background:rgba(62,207,142,0.1);border:1px solid rgba(62,207,142,0.3);border-radius:10px;padding:20px;text-align:center;margin-top:16px">
+              <div style="font-size:24px;margin-bottom:8px">✅</div>
+              <div style="font-weight:600;margin-bottom:4px">Enquiry sent!</div>
+              <div style="font-size:13px;color:var(--muted)">Neil will give you a call within 24 hours. If it's urgent, call 0449 798 359.</div>
+            </div>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:16px">No spam. No passing your details to third parties. Just a call from Neil.</p>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(62,207,142,0.08),rgba(62,207,142,0.04));border:1px solid rgba(62,207,142,0.15);border-radius:14px;padding:24px;margin-top:16px;display:flex;gap:16px;align-items:center">
+            <div style="font-size:32px">📞</div>
+            <div><div style="font-weight:600;margin-bottom:4px">Prefer to call?</div><div style="font-size:13px;color:var(--muted);margin-bottom:8px">Neil picks up. No hold music, no menu options.</div><a href="tel:0449798359" class="btn-call" style="padding:10px 20px;font-size:14px">0449 798 359</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><div class="logo" onclick="showPage('home')">CQwebs<span>Plus</span></div><p>Websites and AI receptionists for Queensland businesses.</p></div>
+    <div class="footer-col"><h4>Pages</h4><a onclick="showPage('home')">Home</a><a onclick="showPage('about')">About</a><a onclick="showPage('services')">Services</a><a onclick="showPage('faq')">FAQ</a><a onclick="showPage('contact')">Contact</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="tel:0449798359">📞 0449 798 359</a><a href="/cdn-cgi/l/email-protection#305e55595c5c5f5d00077059535c5f45541e535f5d">✉️ <span class="__cf_email__" data-cfemail="eb858e8287878486dbdcab828887849e8fc5888486">[email&#160;protected]</span></a><a>📍 Central Queensland</a></div>
+  </footer>
+  <div class="footer-bottom"><p>© 2026 CQwebsPlus. All rights reserved. Protected by Cloudflare.</p></div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── Page navigation ───────────────────────────────────────────────────────
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('nav-' + page).classList.add('active');
+  document.getElementById('nav-links').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+// ── Hamburger ─────────────────────────────────────────────────────────────
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+
+// ── FAQ builder ───────────────────────────────────────────────────────────
+const faqs = {
+  website: [
+    ["How long does it take to build my website?", "We have your website live within 48 hours of receiving your content and approving the design. We move fast because we know your time is valuable. Most clients are surprised at how quickly it all comes together."],
+    ["Do I need to provide the content and photos?", "We'll ask you to fill in a simple questionnaire about your business — your services, hours, contact details, and anything else you want included. For photos, your own images are best but we can use professional stock images if needed."],
+    ["Will my website show up on Google?", "Yes — we set up Google Search Console and submit your site to Google as part of every build. We also add proper meta titles and descriptions to every page. Google takes a few weeks to fully index a new site, but you'll start appearing in searches quickly."],
+    ["What if I want to make changes after the site is live?", "Monthly updates are included in your subscription. Just call or email us and we'll make the changes. Need to update your hours, add a new service, or swap out a photo? Done. That's what the monthly fee covers."],
+    ["Do I own my website?", "Yes — the website belongs to you. Your domain is registered in your name, and you have access to all your accounts. We manage everything for you, but you own it. If you ever wanted to move away from us, you can take your site with you."],
+    ["Is my website secure?", "Very. Every site we build is hosted on ultra-secure static hosting with no database to hack, and protected by Cloudflare — the world's leading web security platform. You get DDoS protection, a web application firewall, free SSL, and bot blocking — all included."],
+    ["What is Cloudflare and why do I need it?", "Cloudflare sits between the internet and your website, acting as a security shield. It blocks hackers, DDoS attacks, and malicious bots before they ever reach your site. It's used by major banks, governments, and millions of businesses worldwide — and we include it on every site we build at no extra cost."],
+  ],
+  aria: [
+    ["Will callers know they're talking to an AI?", "Most people don't know — and many are surprised when they find out. Aria uses a natural-sounding Australian voice and has real conversations. She doesn't sound robotic. Most callers just think they've reached a receptionist."],
+    ["What happens when a caller asks something Aria doesn't know?", "Aria is trained on your specific business — your hours, services, location, FAQs, and more. If someone asks something outside of what she knows, she'll offer to take a message and have you call them back. She never makes things up."],
+    ["Does Aria work with my existing phone number?", "Yes — we set up call forwarding from your existing number to Aria. You keep your same number. Callers dial your number as usual, Aria answers. You can set it to always forward, or just when you don't answer."],
+    ["Can I listen to the calls Aria makes?", "Yes — every call is recorded and you receive a written summary after each one. You can listen to any call at any time. We also send you a monthly report showing call volume, common questions, and any appointments booked."],
+    ["Can Aria book appointments into my calendar?", "Aria can collect appointment details and confirm the booking with the caller. Calendar integration is available on our Premium package. For other packages, Aria takes the details and sends them to you to confirm."],
+    ["What if I want to answer the call myself?", "Easy — just don't forward the call, or set forwarding to only activate after a certain number of rings. You answer first; if you're busy or don't pick up, Aria takes over. It's completely flexible."],
+  ],
+  general: [
+    ["Is there a lock-in contract?", "No lock-in contracts. Ever. You pay month to month and can cancel any time. We're confident enough in our service that we don't need to trap you in a contract. We earn your business every single month."],
+    ["How do I get started?", "Call Neil on 0449 798 359 or fill in the contact form for a free quote. We'll have a quick chat about your business, recommend the right package, and get started the same day. Most clients are live within 48 hours of our first conversation."],
+    ["Are you based in Queensland?", "Yes — we're based in Central Queensland. Not an overseas company, not a Brisbane agency. We're local, we understand regional business, and we're available by phone whenever you need us."],
+    ["Do you offer a free trial or demo?", "We offer a free demonstration call — call us and we'll put you through to Aria so you can hear exactly what your customers will experience. There's no obligation and it only takes 2 minutes. Call 0449 798 359 and ask for an Aria demo."],
+  ]
+};
+
+function buildFaqs() {
+  Object.entries(faqs).forEach(([key, items]) => {
+    const container = document.getElementById('faq-' + key);
+    if (!container) return;
+    container.innerHTML = items.map((item, i) => `
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>${item[0]}</span>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">${item[1]}</div>
+      </div>
+    `).join('');
+  });
+}
+buildFaqs();
+
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open'
